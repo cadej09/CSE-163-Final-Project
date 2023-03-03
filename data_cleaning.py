@@ -1,0 +1,86 @@
+import pandas as pd
+
+
+def merge_data():
+    df_2014 = pd.read_csv('data/survey_14.csv')
+    df_2016 = pd.read_csv('data/survey_16.csv')
+    df_2019 = pd.read_csv('data/survey_19.csv')
+
+    df_2014 = df_2014.loc[:, 'Country':].drop(columns=['remote_work',
+                                                       'comments',
+                                                       'mental_health_consequence',
+                                                       'phys_health_consequence',
+                                                       'mental_vs_physical',
+                                                       'obs_consequence'])
+
+    # Match the answer/value
+    df_2014["work_interfere"].fillna('Not applicable to me', inplace=True)
+    df_2014[['coworkers', 'supervisor']] = df_2014[['coworkers', 'supervisor']].replace('Some of them', 'Maybe')
+    df_2014[['benefits', 'wellness_program', 'seek_help', 'anonymity']] = df_2014[['benefits', 'wellness_program', 'seek_help', 'anonymity']].replace("Don't know'", "I don't know")
+    df_2014['care_options'] = df_2014['care_options'].replace('Not sure', 'I am not sure')
+
+    # Select only common columns between three datasets.
+    df_2016 = df_2016[['What country do you live in?',
+                       'What US state or territory do you live in?',
+                       'Are you self-employed?',
+                       'Do you have a family history of mental illness?',
+                       'Have you ever sought treatment for a mental health issue from a mental health professional?',
+                       'If you have a mental health issue, do you feel that it interferes with your work when NOT being treated effectively?',
+                       'How many employees does your company or organization have?',
+                       'Is your employer primarily a tech company/organization?',
+                       'Does your employer provide mental health benefits as part of healthcare coverage?',
+                       'Do you know the options for mental health care available under your employer-provided coverage?',
+                       'Has your employer ever formally discussed mental health (for example, as part of a wellness campaign or other official communication)?',
+                       'Does your employer offer resources to learn more about mental health concerns and options for seeking help?',
+                       'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?',
+                       'If a mental health issue prompted you to request a medical leave from work, asking for that leave would be:',
+                       'Would you feel comfortable discussing a mental health disorder with your coworkers?',
+                       'Would you feel comfortable discussing a mental health disorder with your direct supervisor(s)?',
+                       'Would you bring up a mental health issue with a potential employer in an interview?',
+                       'Would you be willing to bring up a physical health issue with a potential employer in an interview?',
+                       'Have you heard of or observed negative consequences for co-workers who have been open about mental health issues in your workplace?']]
+
+    # Match the column names
+    df_2016.columns = ['Country', 'state', 'self_employed', 'family_history',
+                       'treatment', 'work_interfere', 'no_employees',
+                       'tech_company', 'benefits', 'care_options',
+                       'wellness_program', 'seek_help', 'anonymity', 'leave',
+                       'coworkers', 'supervisor', 'mental_health_interview',
+                       'phys_health_interview', 'obs_consequence']
+
+    # Match the answer/value
+    df_2016[['self_employed', 'treatment', 'tech_company']] = df_2016[['self_employed', 'treatment', 'tech_company']].replace([1, 0], ['Yes', 'No'])
+
+    # Select only common columns between three datasets.
+    df_2019 = df_2019[['What country do you *live* in?',
+                       'What US state or territory do you *live* in?',
+                       '*Are you self-employed?*',
+                       'Do you have a family history of mental illness?',
+                       'Have you ever sought treatment for a mental health disorder from a mental health professional?',
+                       'If you have a mental health disorder, how often do you feel that it interferes with your work *when* _*NOT*_* being treated effectively (i.e., when you are experiencing symptoms)?*',
+                       'How many employees does your company or organization have?', 'Is your employer primarily a tech company/organization?',
+                       'Does your employer provide mental health benefits as part of healthcare coverage?',
+                       'Do you know the options for mental health care available under your employer-provided health coverage?',
+                       'Has your employer ever formally discussed mental health (for example, as part of a wellness campaign or other official communication)?',
+                       'Does your employer offer resources to learn more about mental health disorders and options for seeking help?',
+                       'Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer?',
+                       'If a mental health issue prompted you to request a medical leave from work, how easy or difficult would it be to ask for that leave?',
+                       'Would you feel comfortable discussing a mental health issue with your coworkers?', 'Would you feel comfortable discussing a mental health issue with your direct supervisor(s)?',
+                       'Would you bring up your *mental* health with a potential employer in an interview?',
+                       'Would you be willing to bring up a physical health issue with a potential employer in an interview?']]
+
+    # Match the column names
+    df_2019.columns = ['Country', 'state', 'self_employed', 'family_history',
+                       'treatment', 'work_interfere', 'no_employees',
+                       'tech_company', 'benefits', 'care_options',
+                       'wellness_program', 'seek_help', 'anonymity', 'leave',
+                       'phys_health_interview']
+
+    # Match the answer/value
+    df_2019[['self_employed', 'treatment', 'tech_company']] = df_2019[['self_employed', 'treatment', 'tech_company']].replace([True, False], ['Yes', 'No'])
+    df_2019["care_options"].fillna('I am not sure', inplace=True)
+
+    # Merge the three data
+    merged_df = pd.concat([df_2014, df_2016, df_2019])
+
+    return merged_df
