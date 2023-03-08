@@ -144,7 +144,7 @@ def merge_data():
 
     # Merge the three data
     merged_df = pd.concat([df_2014, df_2016, df_2019])
-    
+
     merged_df = merged_df.replace({'state': {'Illinois': 'IL',
                                              'Tennessee': 'TN',
                                              'Virginia': 'VA',
