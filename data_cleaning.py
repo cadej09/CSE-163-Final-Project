@@ -1,3 +1,8 @@
+"""
+This file reads in all of the datasets and cleans up each of the dataset
+to contain the same columns and values. Uses pandas for dataframe manipulation.
+Returns the combined datasets as a one data frame.
+"""
 import pandas as pd
 
 
@@ -6,14 +11,12 @@ def merge_data():
     df_2016 = pd.read_csv('data/survey_16.csv')
     df_2019 = pd.read_csv('data/survey_19.csv')
 
-    df_2014 = df_2014.loc[:, 'Country':].drop(columns=['remote_work',
-                                                       'comments',
-                                                       'mental_health_'
-                                                       'consequence',
-                                                       'phys_health_'
-                                                       'consequence',
-                                                       'mental_vs_physical',
-                                                       'obs_consequence'])
+    df_2014 = df_2014.loc[:, 'Age':].drop(columns=['Gender', 'remote_work',
+                                                   'comments', 'mental_health_'
+                                                   'consequence',
+                                                   'phys_health_consequence',
+                                                   'mental_vs_physical',
+                                                   'obs_consequence'])
 
     # Match the answer/value
     df_2014["work_interfere"].fillna('Not applicable to me', inplace=True)
@@ -30,7 +33,8 @@ def merge_data():
     )
 
     # Select only common columns between three datasets.
-    df_2016 = df_2016[['What country do you live in?',
+    df_2016 = df_2016[['What is your age?',
+                       'What country do you live in?',
                        'What US state or territory do you live in?',
                        'Are you self-employed?',
                        'Do you have a family history of mental illness?',
@@ -68,12 +72,12 @@ def merge_data():
                        'Would you be willing to bring up a physical health '
                        'issue with a potential employer in an interview?']]
     # Match the column names
-    df_2016.columns = ['Country', 'state', 'self_employed', 'family_history',
-                       'treatment', 'work_interfere', 'no_employees',
-                       'tech_company', 'benefits', 'care_options',
-                       'wellness_program', 'seek_help', 'anonymity', 'leave',
-                       'coworkers', 'supervisor', 'mental_health_interview',
-                       'phys_health_interview']
+    df_2016.columns = ['Age', 'Country', 'state', 'self_employed',
+                       'family_history', 'treatment', 'work_interfere',
+                       'no_employees', 'tech_company', 'benefits',
+                       'care_options', 'wellness_program', 'seek_help',
+                       'anonymity', 'leave', 'coworkers', 'supervisor',
+                       'mental_health_interview', 'phys_health_interview']
 
     # Match the answer/value
     df_2016[['self_employed', 'treatment', 'tech_company']] = (
@@ -82,7 +86,8 @@ def merge_data():
     )
 
     # Select only common columns between three datasets.
-    df_2019 = df_2019[['What country do you *live* in?',
+    df_2019 = df_2019[['What is your age?',
+                       'What country do you *live* in?',
                        'What US state or territory do you *live* in?',
                        '*Are you self-employed?*',
                        'Do you have a family history of mental illness?',
@@ -123,12 +128,12 @@ def merge_data():
                        'issue with a potential employer in an interview?']]
 
     # Match the column names
-    df_2019.columns = ['Country', 'state', 'self_employed', 'family_history',
-                       'treatment', 'work_interfere', 'no_employees',
-                       'tech_company', 'benefits', 'care_options',
-                       'wellness_program', 'seek_help', 'anonymity', 'leave',
-                       'coworkers', 'supervisor', 'mental_health_interview',
-                       'phys_health_interview']
+    df_2019.columns = ['Age', 'Country', 'state', 'self_employed',
+                       'family_history', 'treatment', 'work_interfere',
+                       'no_employees', 'tech_company', 'benefits',
+                       'care_options', 'wellness_program', 'seek_help',
+                       'anonymity', 'leave', 'coworkers', 'supervisor',
+                       'mental_health_interview', 'phys_health_interview']
 
     # Match the answer/value
     df_2019[['self_employed', 'treatment', 'tech_company']] = (
@@ -139,5 +144,53 @@ def merge_data():
 
     # Merge the three data
     merged_df = pd.concat([df_2014, df_2016, df_2019])
+    
+    merged_df = merged_df.replace({'state': {'Illinois': 'IL',
+                                             'Tennessee': 'TN',
+                                             'Virginia': 'VA',
+                                             'California': 'CA',
+                                             'Kentucky': 'KY',
+                                             'Oregon': 'OR',
+                                             'Pennsylvania': 'PA',
+                                             'New Jersey': 'NJ',
+                                             'Georgia': 'GA',
+                                             'Washington': 'WA',
+                                             'New York': 'NY',
+                                             'Indiana': 'IN',
+                                             'Minnesota': 'MN',
+                                             'West Virginia': 'WV',
+                                             'Florida': 'FL',
+                                             'Massachusetts': 'MA',
+                                             'North Dakota': 'ND',
+                                             'Texas': 'TX',
+                                             'Maryland': 'MD',
+                                             'Wisconsin': 'WI',
+                                             'Michigan': 'MI',
+                                             'Vermont': 'VT',
+                                             'North Carolina': 'NC',
+                                             'Kansas': 'KS',
+                                             'District of Columbia': 'DC',
+                                             'Nevada': 'NV', 'Utah': 'UT',
+                                             'Connecticut': 'CT',
+                                             'Colorado': 'CO',
+                                             'Ohio': 'OH',
+                                             'Iowa': 'IA',
+                                             'South Dakota': 'SD',
+                                             'Nebraska': 'NE',
+                                             'Maine': 'ME',
+                                             'Missouri': 'MO',
+                                             'Arizona': 'AZ',
+                                             'Oklahoma': 'OK',
+                                             'Idaho': 'ID',
+                                             'Rhode Island': 'RI',
+                                             'Alabama': 'AL',
+                                             'Louisiana': 'LA',
+                                             'South Carolina': 'SC',
+                                             'New Hampshire': 'NH',
+                                             'New Mexico': 'NM',
+                                             'Montana': 'MT',
+                                             'Alaska': 'AK',
+                                             'Delaware': 'DE',
+                                             'Wyoming': 'WY'}})
 
     return merged_df
