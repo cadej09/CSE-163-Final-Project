@@ -174,8 +174,6 @@ def rfc_model(features: pd.DataFrame, labels: pd.Series) -> None:
 
     # Print feature importances
     importances = rfc.feature_importances_
-    std = np.std([tree.feature_importances_ for tree in rfc.estimators_],
-                 axis=0)
     indices = np.argsort(importances)[::-1]
 
     # Write the output to a text file
