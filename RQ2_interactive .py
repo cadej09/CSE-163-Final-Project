@@ -49,7 +49,16 @@ def graph_relation(df: pd.DataFrame):
     y_column = 'comfortable_score'
     fig = px.scatter(df_group, x=x_column, y=y_column,
                      trendline='ols', animation_frame="year")
-    fig.update_layout(yaxis_range=[8, 16])
+    fig.update_layout(
+        yaxis_range=[8, 16],
+        title={
+            'text': "Relationship Between Support Score and Comfortable Score",
+            'y': 0.95,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'},
+        xaxis_title="Support Score",
+        yaxis_title="Comfortable Score")
     fig.show()
 
 
