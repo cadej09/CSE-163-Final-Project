@@ -209,4 +209,3 @@ def merge_data():
                                              'Wyoming': 'WY'}})
 
     return merged_df
-

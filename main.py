@@ -6,7 +6,9 @@ Final Project
 A file that contains the main method
 """
 
-# import pandas as pd
+import pandas as pd
+from data_cleaning import merge_data
+import question1
 
 
 def main():
