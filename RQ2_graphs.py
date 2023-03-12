@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+import plotly.io as pio
 from data_cleaning import merge_data
 
 
@@ -47,14 +48,42 @@ def graph_relation(df: pd.DataFrame):
     fig = px.scatter(df_group, x=x_column, y=y_column, trendline='ols')
     fig.update_layout(
         title={
-            'text': "Relationship Between Support Score and Comfortable Score",
+            'text': "Relationship Between Employer's Support Score"
+            "and Employee's Comfortable Score",
+            'y': 0.95,
+            'x': 0.5,
+            'xanchor': 'center',
+            'yanchor': 'top',
+            'font': {
+                'size': 15
+            }
+        },
+        xaxis_title="Support Score",
+        yaxis_title="Comfortable Score")
+    pio.write_image(fig, 'RQ2_merged_graph.png')
+
+
+def graph_interactive(df: pd.DataFrame):
+    df_group = (df.groupby(['year', 'support_score'])['comfortable_score']
+                .mean()
+                .reset_index()
+                .rename(columns={'comfortable_score': 'comfortable_score'}))
+    x_column = 'support_score'
+    y_column = 'comfortable_score'
+    fig = px.scatter(df_group, x=x_column, y=y_column,
+                     trendline='ols', animation_frame="year")
+    fig.update_layout(
+        yaxis_range=[8, 16],
+        title={
+            'text': "Relationship Between Employer's Support Score "
+                    "and Employee's Comfortable Score",
             'y': 0.95,
             'x': 0.5,
             'xanchor': 'center',
             'yanchor': 'top'},
         xaxis_title="Support Score",
         yaxis_title="Comfortable Score")
-    fig.show()
+    pio.write_html(fig, 'RQ2_interactive_fig.html')
 
 
 def main():
@@ -62,6 +91,7 @@ def main():
     employer_support(df)
     employee_comfortable(df)
     graph_relation(df)
+    graph_interactive(df)
 
 
 if __name__ == '__main__':
