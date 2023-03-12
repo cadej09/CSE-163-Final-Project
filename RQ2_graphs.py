@@ -60,7 +60,7 @@ def graph_relation(df: pd.DataFrame) -> None:
         },
         xaxis_title="Support Score",
         yaxis_title="Comfortable Score")
-    pio.write_image(fig, 'RQ2_merged_graph.png')
+    pio.write_image(fig, 'output/RQ2_merged_graph.png')
 
 
 def graph_interactive(df: pd.DataFrame) -> None:
@@ -83,7 +83,7 @@ def graph_interactive(df: pd.DataFrame) -> None:
             'yanchor': 'top'},
         xaxis_title="Support Score",
         yaxis_title="Comfortable Score")
-    pio.write_html(fig, 'RQ2_interactive_fig.html')
+    pio.write_html(fig, 'output/RRQ2_interactive_fig.html')
 
 
 def main():

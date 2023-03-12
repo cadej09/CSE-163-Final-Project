@@ -4,6 +4,7 @@ The functions will create machine learning models to predict the worker's
 likely of seeking treatment and will allow to see the correlation of factors.
 """
 from data_cleaning import merge_data
+import os
 import pandas as pd
 import numpy as np
 from sklearn.metrics import accuracy_score
@@ -96,8 +97,9 @@ def plot_tree(model: DecisionTreeClassifier, features: pd.DataFrame,
                                impurity=False,
                                filled=True, rounded=True,
                                special_characters=True)
-    graphviz.Source(dot_data).render('tree.gv', format='png')
-    display(Image(filename='tree.gv.png'))
+    graphviz.Source(dot_data).render(os.path.join('output',
+                                                  'tree.gv'), format='png')
+    display(Image(filename=os.path.join('output', 'tree.gv.png')))
 
 
 def dtc_model(features: pd.DataFrame, labels: pd.Series) -> None:
@@ -176,8 +178,8 @@ def rfc_model(features: pd.DataFrame, labels: pd.Series) -> None:
     importances = rfc.feature_importances_
     indices = np.argsort(importances)[::-1]
 
-    # Write the output to a text file
-    with open('random_forest_results.txt', 'w') as f:
+    # Write the output to a text file in the 'output' directory
+    with open('output/random_forest_results.txt', 'w') as f:
         # Write test accuracy to file
         f.write('Test Accuracy: ' + str(test_accuracy) + '\n\n')
 
