@@ -8,40 +8,38 @@ def employer_support(df: pd.DataFrame):
     # df = df[['year'] == year]
     wellness = df['wellness_program']
     wellness.replace(["No", "Don't know", "I don't know", "Yes"],
-                     [0, 0.2, 0.2, 1], inplace=True)
+                     [0, 2, 2, 10], inplace=True)
     # Care Option
     care = df['care_options']
-    care.replace(["No", "I am not sure", "Yes"], [0, 0.2, 1], inplace=True)
+    care.replace(["No", "I am not sure", "Yes"], [0, 2, 10], inplace=True)
     # Benefits
     benefits = df['benefits']
     benefits.replace(["No", "Don't know", "I don't know", "Yes",
                       'Not eligible for coverage / N/A',
                       'Not eligible for coverage / NA'],
-                     [0, 0.2, 0.2, 1, 0, 0], inplace=True)
-    # Leave
-    # leave = df['leave']
+                     [0, 2, 2, 10, 0, 0], inplace=True)
     # Calculate support score
     df['support_score'] = wellness + care + benefits
 
 
-def employee_comfortable(df):
+def employee_comfortable(df: pd.DataFrame):
     # Do you think that discussing a mental health issue with your employer
     # would have negative consequences?
     # df[['year'] == year]
     mental_consequence = df['mental_health_interview']
-    mental_consequence.replace(["No", "Maybe", "Yes"], [1, 0.25, 0],
+    mental_consequence.replace(["No", "Maybe", "Yes"], [1, 2, 10],
                                inplace=True)
     coworkers = df['coworkers']
-    coworkers.replace(["No", "Maybe", "Yes"], [0, 0.4, 1],
+    coworkers.replace(["No", "Maybe", "Yes"], [0, 4, 10],
                       inplace=True)
     supervisor = df['supervisor']
-    supervisor.replace(["No", "Maybe", "Yes"], [0, 0.6, 1],
+    supervisor.replace(["No", "Maybe", "Yes"], [0, 6, 10],
                        inplace=True)
     # comfortable score
     df['comfortable_score'] = mental_consequence + coworkers + supervisor
 
 
-def graph_relation(df):
+def graph_relation(df: pd.DataFrame):
     df_group = (df.groupby(['year', 'support_score'])['comfortable_score']
                 .mean()
                 .reset_index()
@@ -51,7 +49,7 @@ def graph_relation(df):
     y_column = 'comfortable_score'
     fig = px.scatter(df_group, x=x_column, y=y_column,
                      trendline='ols', animation_frame="year")
-    fig.update_layout(yaxis_range=[1.2, 2.4])
+    fig.update_layout(yaxis_range=[8, 16])
     fig.show()
 
 
