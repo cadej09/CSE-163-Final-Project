@@ -7,10 +7,13 @@ A file that contains the main method
 """
 
 # import pandas as pd
+from data_cleaning import merge_data
+import question1
 
 
 def main():
-    pass
+    merged_df = merge_data()
+    question1.clf_model(merged_df)
 
 
 if __name__ == '__main__':
