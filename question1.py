@@ -3,15 +3,15 @@ This file contains the functions created to answer the first research question.
 The functions will create machine learning models to predict the worker's
 likely of seeking treatment and will allow to see the correlation of factors.
 """
+from data_cleaning import merge_data
 import pandas as pd
 import numpy as np
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
-from sklearn import tree
 from IPython.display import Image, display
 import graphviz
-from sklearn.tree import export_graphviz
+from sklearn.tree import DecisionTreeClassifier, export_graphviz
 
 
 def best_test_split(features: pd.DataFrame, labels: pd.Series) -> float:
@@ -33,7 +33,7 @@ def best_test_split(features: pd.DataFrame, labels: pd.Series) -> float:
         X_train, X_test, Y_train, Y_test = \
             train_test_split(features, labels, test_size=split)
 
-        clf = tree.DecisionTreeClassifier()
+        clf = DecisionTreeClassifier()
         clf.fit(X_train, Y_train)
         test_predictions = clf.predict(X_test)
 
@@ -68,7 +68,7 @@ def best_max_depth(X_train: pd.DataFrame, X_test: pd.DataFrame,
     best_depth_score = 0
 
     for d in range(1, 11):
-        model = tree.DecisionTreeClassifier(max_depth=d)
+        model = DecisionTreeClassifier(max_depth=d)
         model.fit(X_train, Y_train)
         test_pred = model.predict(X_test)
         current_depth_score = accuracy_score(Y_test, test_pred)
@@ -80,7 +80,7 @@ def best_max_depth(X_train: pd.DataFrame, X_test: pd.DataFrame,
     return best_depth
 
 
-def plot_tree(model: tree.DecisionTreeClassifier, features: pd.DataFrame,
+def plot_tree(model: DecisionTreeClassifier, features: pd.DataFrame,
               labels: pd.Series) -> None:
     """
     Visualizes a given decision tree model.
@@ -117,7 +117,7 @@ def dtc_model(features: pd.DataFrame, labels: pd.Series) -> None:
     X_train, X_test, Y_train, Y_test = \
         train_test_split(features, labels, test_size=best_split)
 
-    clf = tree.DecisionTreeClassifier()
+    clf = DecisionTreeClassifier()
     clf.fit(X_train, Y_train)
 
     # Print accuracy
@@ -127,7 +127,7 @@ def dtc_model(features: pd.DataFrame, labels: pd.Series) -> None:
 
     best_depth = best_max_depth(X_train, X_test, Y_train, Y_test)
     # Create an untrained model
-    short_clf = tree.DecisionTreeClassifier(max_depth=best_depth)
+    short_clf = DecisionTreeClassifier(max_depth=best_depth)
 
     # Train it on the **training set**
     short_clf.fit(X_train, Y_train)
@@ -191,3 +191,20 @@ def rfc_model(features: pd.DataFrame, labels: pd.Series) -> None:
             importance = importances[indices[i]]
             rank_str = f'{i+1}. {feature_name} ({importance:.4f})\n'
             f.write(rank_str)
+
+
+def main():
+    merged_df = merge_data()
+    data = merged_df[['Age', 'self_employed', 'family_history',
+                      'no_employees', 'tech_company', 'wellness_program',
+                      'treatment']].dropna()
+    features = data.loc[:, data.columns != 'treatment']
+    features = pd.get_dummies(features)
+    labels = data['treatment']
+
+    dtc_model(features, labels)
+    rfc_model(features, labels)
+
+
+if __name__ == '__main__':
+    main()
