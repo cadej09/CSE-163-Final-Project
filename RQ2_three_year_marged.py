@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+import plotly.io as pio
 from data_cleaning import merge_data
 
 
@@ -48,14 +49,18 @@ def graph_relation(df: pd.DataFrame):
     fig.update_layout(
         title={
             'text': "Relationship Between Employer's Support Score"
-                "and Employee's Comfortable Score",
+            "and Employee's Comfortable Score",
             'y': 0.95,
             'x': 0.5,
             'xanchor': 'center',
-            'yanchor': 'top'},
+            'yanchor': 'top',
+            'font': {
+                'size': 15
+            }
+        },
         xaxis_title="Support Score",
         yaxis_title="Comfortable Score")
-    fig.show()
+    pio.write_image(fig, 'RQ2_merged_graph.png')
 
 
 def main():
