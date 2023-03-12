@@ -4,7 +4,7 @@ import plotly.io as pio
 from data_cleaning import merge_data
 
 
-def employer_support(df: pd.DataFrame):
+def employer_support(df: pd.DataFrame) -> None:
     # Wellness
     wellness = df['wellness_program']
     wellness.replace(["No", "Don't know", "I don't know", "Yes"],
@@ -22,7 +22,7 @@ def employer_support(df: pd.DataFrame):
     df['support_score'] = wellness + care + benefits
 
 
-def employee_comfortable(df: pd.DataFrame):
+def employee_comfortable(df: pd.DataFrame) -> None:
     # Do you think that discussing a mental health issue with your employer
     # would have negative consequences?
     mental_consequence = df['mental_health_interview']
@@ -38,7 +38,7 @@ def employee_comfortable(df: pd.DataFrame):
     df['comfortable_score'] = mental_consequence + coworkers + supervisor
 
 
-def graph_relation(df: pd.DataFrame):
+def graph_relation(df: pd.DataFrame) -> None:
     df_group = (df.groupby('support_score')['comfortable_score']
                 .mean()
                 .reset_index()
@@ -63,7 +63,7 @@ def graph_relation(df: pd.DataFrame):
     pio.write_image(fig, 'RQ2_merged_graph.png')
 
 
-def graph_interactive(df: pd.DataFrame):
+def graph_interactive(df: pd.DataFrame) -> None:
     df_group = (df.groupby(['year', 'support_score'])['comfortable_score']
                 .mean()
                 .reset_index()
@@ -90,11 +90,9 @@ def main():
     df = merge_data().dropna()
     employer_support(df)
     employee_comfortable(df)
-    print(df.columns)
     graph_relation(df)
     graph_interactive(df)
 
 
 if __name__ == '__main__':
     main()
-    
