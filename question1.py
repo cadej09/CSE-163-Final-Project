@@ -9,9 +9,9 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import tree
-# from IPython.display import Image, display
-# import graphviz
-# from sklearn.tree import export_graphviz
+from IPython.display import Image, display
+import graphviz
+from sklearn.tree import export_graphviz
 
 
 def best_test_split(features: pd.DataFrame, labels: pd.Series) -> float:
@@ -80,27 +80,27 @@ def best_max_depth(X_train: pd.DataFrame, X_test: pd.DataFrame,
     return best_depth
 
 
-# def plot_tree(model: tree.DecisionTreeClassifier, features: pd.DataFrame,
-#               labels: pd.Series) -> None:
-#     """
-#     Visualizes a given decision tree model.
+def plot_tree(model: tree.DecisionTreeClassifier, features: pd.DataFrame,
+              labels: pd.Series) -> None:
+    """
+    Visualizes a given decision tree model.
 
-#     Args:
-#         model (tree.DecisionTreeClassifier): Trained decision tree model.
-#         features (pd.DataFrame): Features of the dataset.
-#         labels (pd.Series): Labels of the dataset.
-#     """
-#     dot_data = export_graphviz(model, out_file=None,
-#                                feature_names=features.columns,
-#                                class_names=labels.unique(),
-#                                impurity=False,
-#                                filled=True, rounded=True,
-#                                special_characters=True)
-#     graphviz.Source(dot_data).render('tree.gv', format='png')
-#     display(Image(filename='tree.gv.png'))
+    Args:
+        model (tree.DecisionTreeClassifier): Trained decision tree model.
+        features (pd.DataFrame): Features of the dataset.
+        labels (pd.Series): Labels of the dataset.
+    """
+    dot_data = export_graphviz(model, out_file=None,
+                               feature_names=features.columns,
+                               class_names=labels.unique(),
+                               impurity=False,
+                               filled=True, rounded=True,
+                               special_characters=True)
+    graphviz.Source(dot_data).render('tree.gv', format='png')
+    display(Image(filename='tree.gv.png'))
 
 
-def dtc_model(features, labels) -> None:
+def dtc_model(features: pd.DataFrame, labels: pd.Series) -> None:
     """
     Creates the "best" Decision Tree model for the instance and
     visualizes the model.
@@ -137,7 +137,7 @@ def dtc_model(features, labels) -> None:
     print('Best Max Depth:', format(best_depth),
           'Test  Accuracy:', accuracy_score(Y_test, test_predictions))
 
-    # plot_tree(short_clf, X_train, Y_train)
+    plot_tree(short_clf, X_train, Y_train)
 
 
 def rfc_model(features: pd.DataFrame, labels: pd.Series) -> None:
