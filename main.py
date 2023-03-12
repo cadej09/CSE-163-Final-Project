@@ -7,6 +7,7 @@ A file that contains the main method
 """
 
 # import pandas as pd
+import plotly.express as px
 
 
 def main():
