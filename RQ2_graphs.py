@@ -73,7 +73,7 @@ def graph_interactive(df: pd.DataFrame):
     fig = px.scatter(df_group, x=x_column, y=y_column,
                      trendline='ols', animation_frame="year")
     fig.update_layout(
-        yaxis_range=[8, 16],
+        yaxis_range=[13, 25],
         title={
             'text': "Relationship Between Employer's Support Score "
                     "and Employee's Comfortable Score",
@@ -90,9 +90,11 @@ def main():
     df = merge_data().dropna()
     employer_support(df)
     employee_comfortable(df)
+    print(df.columns)
     graph_relation(df)
     graph_interactive(df)
 
 
 if __name__ == '__main__':
     main()
+    
