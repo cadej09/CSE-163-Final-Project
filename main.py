@@ -20,7 +20,7 @@ def main():
     features = pd.get_dummies(features)
     labels = data['treatment']
     question1.dtc_model(features, labels)
-    # question1.rfc_model(features, labels)
+    question1.rfc_model(features, labels)
 
 
 if __name__ == '__main__':
