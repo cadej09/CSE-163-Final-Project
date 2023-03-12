@@ -7,9 +7,13 @@ import pandas as pd
 
 
 def merge_data():
+    """_summary_
+
+    Returns:
+        _type_: _description_
+    """
+    # Cleaning 2014 dataset.
     df_2014 = pd.read_csv('data/survey_14.csv')
-    df_2016 = pd.read_csv('data/survey_16.csv')
-    df_2019 = pd.read_csv('data/survey_19.csv')
 
     df_2014 = df_2014.loc[:, 'Age':].drop(columns=['Gender', 'remote_work',
                                                    'comments', 'mental_health_'
@@ -31,8 +35,12 @@ def merge_data():
     df_2014['care_options'] = (
         df_2014['care_options'].replace('Not sure', 'I am not sure')
     )
+    df_2014['year'] = 2014
+    
+    # Cleaning 2016 dataset.
+    df_2016 = pd.read_csv('data/survey_16.csv')
 
-    # Select only common columns between three datasets.
+    # Select only shared columns between three datasets.
     df_2016 = df_2016[['What is your age?',
                        'What country do you live in?',
                        'What US state or territory do you live in?',
@@ -70,14 +78,17 @@ def merge_data():
                        'Would you bring up a mental health issue with '
                        'a potential employer in an interview?',
                        'Would you be willing to bring up a physical health '
-                       'issue with a potential employer in an interview?']]
+                       'issue with a potential employer in an interview?']]  
+    df_2016['year'] = 2016
+
     # Match the column names
     df_2016.columns = ['Age', 'Country', 'state', 'self_employed',
                        'family_history', 'treatment', 'work_interfere',
                        'no_employees', 'tech_company', 'benefits',
                        'care_options', 'wellness_program', 'seek_help',
                        'anonymity', 'leave', 'coworkers', 'supervisor',
-                       'mental_health_interview', 'phys_health_interview']
+                       'mental_health_interview', 'phys_health_interview',
+                       'year']
 
     # Match the answer/value
     df_2016[['self_employed', 'treatment', 'tech_company']] = (
@@ -85,6 +96,9 @@ def merge_data():
         .replace([1, 0], ['Yes', 'No'])
     )
 
+    # Cleaning 2019 dataset.
+    df_2019 = pd.read_csv('data/survey_19.csv')
+    
     # Select only common columns between three datasets.
     df_2019 = df_2019[['What is your age?',
                        'What country do you *live* in?',
@@ -126,6 +140,7 @@ def merge_data():
                        'potential employer in an interview?',
                        'Would you be willing to bring up a physical health '
                        'issue with a potential employer in an interview?']]
+    df_2019['year'] = 2019
 
     # Match the column names
     df_2019.columns = ['Age', 'Country', 'state', 'self_employed',
@@ -133,7 +148,8 @@ def merge_data():
                        'no_employees', 'tech_company', 'benefits',
                        'care_options', 'wellness_program', 'seek_help',
                        'anonymity', 'leave', 'coworkers', 'supervisor',
-                       'mental_health_interview', 'phys_health_interview']
+                       'mental_health_interview', 'phys_health_interview',
+                       'year']
 
     # Match the answer/value
     df_2019[['self_employed', 'treatment', 'tech_company']] = (
@@ -142,9 +158,8 @@ def merge_data():
     )
     df_2019["care_options"].fillna('I am not sure', inplace=True)
 
-    # Merge the three data
+    # Merge the three datasets.
     merged_df = pd.concat([df_2014, df_2016, df_2019])
-
     merged_df = merged_df.replace({'state': {'Illinois': 'IL',
                                              'Tennessee': 'TN',
                                              'Virginia': 'VA',

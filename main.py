@@ -7,11 +7,19 @@ A file that contains the main method
 """
 
 # import pandas as pd
-import plotly.express as px
 
 
 def main():
-    pass
+    merged_df = merge_data()
+    data = merged_df[['Age', 'self_employed', 'family_history',
+                      'no_employees', 'tech_company', 'wellness_program',
+                      'treatment']].dropna()
+    features = data.loc[:, data.columns != 'treatment']
+    features = pd.get_dummies(features)
+    labels = data['treatment']
+
+    question1.dtc_model(features, labels)
+    question1.rfc_model(features, labels)
 
 
 if __name__ == '__main__':
