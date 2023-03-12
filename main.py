@@ -19,6 +19,7 @@ def main():
     features = data.loc[:, data.columns != 'treatment']
     features = pd.get_dummies(features)
     labels = data['treatment']
+
     question1.dtc_model(features, labels)
     question1.rfc_model(features, labels)
 
