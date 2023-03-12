@@ -6,7 +6,8 @@ likely of seeking treatment and will allow to see the correlation of factors.
 import pandas as pd
 import numpy as np
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.ensemble import RandomForestClassifier
 from sklearn import tree
 from IPython.display import Image, display
 import graphviz
@@ -99,7 +100,7 @@ def plot_tree(model: tree.DecisionTreeClassifier, features: pd.DataFrame,
     display(Image(filename='tree.gv.png'))
 
 
-def clf_model(df: pd.DataFrame) -> None:
+def dtc_model(features, labels) -> None:
     """
     Creates the "best" Decision Tree model for the instance and
     visualizes the model.
@@ -112,13 +113,6 @@ def clf_model(df: pd.DataFrame) -> None:
         It generates the "best" Decision Tree model for the given dataset
         and visualizes it using graphviz.
     """
-    data = df[['Age', 'Country', 'self_employed', 'family_history',
-               'no_employees', 'tech_company', 'wellness_program',
-               'treatment']].dropna()
-    features = data.loc[:, data.columns != 'treatment']
-    features = pd.get_dummies(features)
-    labels = data['treatment']
-
     best_split = best_test_split(features, labels)
     X_train, X_test, Y_train, Y_test = \
         train_test_split(features, labels, test_size=best_split)
@@ -144,3 +138,58 @@ def clf_model(df: pd.DataFrame) -> None:
           'Test  Accuracy:', accuracy_score(Y_test, test_predictions))
 
     plot_tree(short_clf, X_train, Y_train)
+
+
+def rfc_model(features: pd.DataFrame, labels: pd.Series) -> None:
+    """
+    Trains and evaluates a random forest classifier using the given features
+    and labels, and writes the results to a text file named
+    'random_forest_results.txt'.
+
+    Args:
+        features (pd.DataFrame): A pandas dataframe of features.
+        labels (pd.Series): A pandas series of labels.
+
+    Returns:
+        None. This function writes the results to a text file.
+    """
+    # Split the data into training and testing sets
+    X_train, X_test, Y_train, Y_test = train_test_split(features, labels,
+                                                        test_size=0.3,
+                                                        random_state=42)
+
+    # Fit a random forest model with 500 trees
+    rfc = RandomForestClassifier(n_estimators=500, random_state=42)
+    rfc.fit(X_train, Y_train)
+
+    # Evaluate the model on the testing data
+    test_predictions = rfc.predict(X_test)
+    test_accuracy = accuracy_score(Y_test, test_predictions)
+    print('Test Accuracy:', test_accuracy)
+
+    # Use cross-validation to evaluate the model
+    scores = cross_val_score(rfc, features, labels, cv=5)
+    cv_accuracy = np.mean(scores)
+    print('Cross-Validation Accuracy:', cv_accuracy)
+
+    # Print feature importances
+    importances = rfc.feature_importances_
+    std = np.std([tree.feature_importances_ for tree in rfc.estimators_],
+                 axis=0)
+    indices = np.argsort(importances)[::-1]
+
+    # Write the output to a text file
+    with open('random_forest_results.txt', 'w') as f:
+        # Write test accuracy to file
+        f.write('Test Accuracy: ' + str(test_accuracy) + '\n\n')
+
+        # Write cross-validation accuracy to file
+        f.write('Cross-Validation Accuracy: ' + str(cv_accuracy) + '\n\n')
+
+        # Write feature ranking to file
+        f.write('Feature Ranking:\n')
+        for i in range(X_train.shape[1]):
+            feature_name = X_train.columns[indices[i]]
+            importance = importances[indices[i]]
+            rank_str = f'{i+1}. {feature_name} ({importance:.4f})\n'
+            f.write(rank_str)
