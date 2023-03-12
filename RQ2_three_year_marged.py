@@ -47,7 +47,8 @@ def graph_relation(df: pd.DataFrame):
     fig = px.scatter(df_group, x=x_column, y=y_column, trendline='ols')
     fig.update_layout(
         title={
-            'text': "Relationship Between Support Score and Comfortable Score",
+            'text': "Relationship Between Employer's Support Score"
+                "and Employee's Comfortable Score",
             'y': 0.95,
             'x': 0.5,
             'xanchor': 'center',
