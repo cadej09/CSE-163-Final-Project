@@ -7,39 +7,37 @@ def employer_support(df: pd.DataFrame):
     # Wellness
     wellness = df['wellness_program']
     wellness.replace(["No", "Don't know", "I don't know", "Yes"],
-                     [0, 0.2, 0.2, 1], inplace=True)
+                     [0, 2, 2, 10], inplace=True)
     # Care Option
     care = df['care_options']
-    care.replace(["No", "I am not sure", "Yes"], [0, 0.2, 1], inplace=True)
+    care.replace(["No", "I am not sure", "Yes"], [0, 2, 10], inplace=True)
     # Benefits
     benefits = df['benefits']
     benefits.replace(["No", "Don't know", "I don't know", "Yes",
                       'Not eligible for coverage / N/A',
                       'Not eligible for coverage / NA'],
-                     [0, 0.2, 0.2, 1, 0, 0], inplace=True)
-    # Leave
-    # leave = df['leave']
+                     [0, 2, 2, 10, 0, 0], inplace=True)
     # Calculate support score
     df['support_score'] = wellness + care + benefits
 
 
-def employee_comfortable(df):
+def employee_comfortable(df: pd.DataFrame):
     # Do you think that discussing a mental health issue with your employer
     # would have negative consequences?
     mental_consequence = df['mental_health_interview']
-    mental_consequence.replace(["No", "Maybe", "Yes"], [1, 0.25, 0],
+    mental_consequence.replace(["No", "Maybe", "Yes"], [10, 2, 0],
                                inplace=True)
     coworkers = df['coworkers']
-    coworkers.replace(["No", "Maybe", "Yes"], [0, 0.4, 1],
+    coworkers.replace(["No", "Maybe", "Yes"], [0, 4, 10],
                       inplace=True)
     supervisor = df['supervisor']
-    supervisor.replace(["No", "Maybe", "Yes"], [0, 0.6, 1],
+    supervisor.replace(["No", "Maybe", "Yes"], [0, 6, 10],
                        inplace=True)
     # comfortable score
     df['comfortable_score'] = mental_consequence + coworkers + supervisor
 
 
-def graph_relation(df):
+def graph_relation(df: pd.DataFrame):
     df_group = (df.groupby('support_score')['comfortable_score']
                 .mean()
                 .reset_index()
