@@ -1,0 +1,26 @@
+"""
+his file aims to answer the question of how working in a tech company and the number of employees impact the
+likelihood of seeking mental health treatment, and it produces a stacked bar graph.
+"""
+import plotly.express as px
+import pandas as pd
+import plotly.io as pio
+pio.renderers.default = 'browser'
+# Load data
+data = pd.read_csv("data.csv")
+
+# Clean data
+data = data[data["seek_help"].isin(["Yes", "No", "Don't know"])]
+
+# Create bar chart with color-coded bars
+fig = px.bar(data, 
+             x="no_employees", 
+             color="seek_help", 
+             title="Mental Health Help-Seeking by Company Size",
+             labels={"no_employees": "Number of Employees", "seek_help": "Mental Health Help-Seeking"},
+             color_discrete_map={"Yes": "#3D9970", "No": "#FF4136", "Don't know": "#FF851B"})
+
+# Adjust layout
+fig.update_layout(showlegend=True, legend_title="Mental Health Help-Seeking")
+fig.update_xaxes(type='category')
+fig.show()
