@@ -5,6 +5,7 @@ from data_cleaning import merge_data
 
 def employer_support(df: pd.DataFrame):
     # Wellness
+    # df = df[['year'] == year]
     wellness = df['wellness_program']
     wellness.replace(["No", "Don't know", "I don't know", "Yes"],
                      [0, 2, 2, 10], inplace=True)
@@ -24,8 +25,9 @@ def employer_support(df: pd.DataFrame):
 def employee_comfortable(df: pd.DataFrame):
     # Do you think that discussing a mental health issue with your employer
     # would have negative consequences?
+    # df[['year'] == year]
     mental_consequence = df['mental_health_interview']
-    mental_consequence.replace(["No", "Maybe", "Yes"], [10, 2, 0],
+    mental_consequence.replace(["No", "Maybe", "Yes"], [1, 2, 10],
                                inplace=True)
     coworkers = df['coworkers']
     coworkers.replace(["No", "Maybe", "Yes"], [0, 4, 10],
@@ -38,22 +40,16 @@ def employee_comfortable(df: pd.DataFrame):
 
 
 def graph_relation(df: pd.DataFrame):
-    df_group = (df.groupby('support_score')['comfortable_score']
+    df_group = (df.groupby(['year', 'support_score'])['comfortable_score']
                 .mean()
                 .reset_index()
-                .rename(columns={'comfortable_score': 'mean_comf_score'}))
+                .rename(columns={'comfortable_score': 'comfortable_score'}))
+    print(df_group)
     x_column = 'support_score'
-    y_column = 'mean_comf_score'
-    fig = px.scatter(df_group, x=x_column, y=y_column, trendline='ols')
-    fig.update_layout(
-        title={
-            'text': "Relationship Between Support Score and Comfortable Score",
-            'y': 0.95,
-            'x': 0.5,
-            'xanchor': 'center',
-            'yanchor': 'top'},
-        xaxis_title="Support Score",
-        yaxis_title="Comfortable Score")
+    y_column = 'comfortable_score'
+    fig = px.scatter(df_group, x=x_column, y=y_column,
+                     trendline='ols', animation_frame="year")
+    fig.update_layout(yaxis_range=[8, 16])
     fig.show()
 
 
@@ -66,3 +62,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
