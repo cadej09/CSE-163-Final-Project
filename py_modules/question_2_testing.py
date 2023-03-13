@@ -1,13 +1,14 @@
 """
-This file contains a function that creates a test df that can be used 
-to test whether the question_2.py file is producing the correct result as expected
+This file contains a function that creates a test df that can be used
+to test whether the question_2.py file is producing the correct result as
+expected
 """
 import pandas as pd
 
 
 def question_2_testing_df() -> pd.DataFrame:
     """
-    This 
+    This function creates a testing dataframe for research question 2
     """
     import pandas as pd
     # create dictionary with column names and data

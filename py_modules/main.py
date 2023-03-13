@@ -6,7 +6,7 @@ A file that contains the main method
 """
 
 import pandas as pd
-from data_cleaning import merge_data
+# from data_cleaning import merge_data
 from cse163_utils import assert_equals
 from question_2 import employer_support
 from question_2 import employee_comfortable
@@ -34,7 +34,6 @@ def test_question_2(df: pd.DataFrame) -> None:
 def main():
     df_2 = question_2_testing_df()
     test_question_2(df_2)
-
 
 
 if __name__ == '__main__':
