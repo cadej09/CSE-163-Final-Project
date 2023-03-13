@@ -23,7 +23,8 @@ from sklearn.tree import DecisionTreeClassifier, export_graphviz
 def best_test_split(features: pd.DataFrame, labels: pd.Series) -> float:
     """
     Finds the best test split for a given dataset by testing the accuracy of
-    the model trained on different test sizes.
+    the model trained on different test sizes. If best is 0.1 or greater than
+    0.4, return 0.3
 
     Args:
         features (pd.DataFrame): Features of the dataset.
@@ -35,7 +36,7 @@ def best_test_split(features: pd.DataFrame, labels: pd.Series) -> float:
     best_split = 0
     best_split_score = 0
 
-    for split in np.linspace(0.1, 0.9, num=9):
+    for split in np.linspace(0.1, 0.4, num=4):
         X_train, X_test, Y_train, Y_test = \
             train_test_split(features, labels, test_size=split)
 
@@ -48,9 +49,6 @@ def best_test_split(features: pd.DataFrame, labels: pd.Series) -> float:
         if current_split_score > best_split_score:
             best_split_score = current_split_score
             best_split = split
-
-    if best_split == 0.1 or best_split > 0.4:
-        best_split = 0.3
 
     return best_split
 
@@ -161,9 +159,10 @@ def rfc_model(features: pd.DataFrame, labels: pd.Series) -> None:
         None. This function writes the results to a text file.
     """
     # Split the data into training and testing sets
-    X_train, X_test, Y_train, Y_test = train_test_split(features, labels,
-                                                        test_size=0.3,
-                                                        random_state=42)
+    best_split = best_test_split(features, labels)
+    X_train, X_test, Y_train, Y_test = \
+        train_test_split(features, labels,
+                         test_size=best_split, random_state=42)
 
     # Fit a random forest model with 500 trees
     rfc = RandomForestClassifier(n_estimators=500, random_state=42)
