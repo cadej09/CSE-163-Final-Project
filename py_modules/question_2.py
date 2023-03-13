@@ -1,5 +1,5 @@
 """
-CSE163 WI23
+CSE 163 WI23
 Cade Jeong, Pooja Thorail, Hans Xu
 
 This module provides functions to analyze a dataset on mental health in the

@@ -1,5 +1,5 @@
 """
-CSE163 WI23
+CSE 163 WI23
 Cade Jeong, Pooja Thorail, Hans Xu
 
 This file aims to answer the question of how working in a tech company and the

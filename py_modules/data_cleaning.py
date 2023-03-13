@@ -1,8 +1,12 @@
 """
+CSE 163 WI23
+Cade Jeong, Pooja Thorail, Hans Xu
+
 This file reads in all of the datasets and cleans up each of the dataset
 to contain the same columns and values. Uses pandas for dataframe manipulation.
 Returns the combined datasets as a one data frame.
 """
+
 import pandas as pd
 
 
