@@ -9,10 +9,13 @@ show the correlation of factors. The models used are a Decision Tree
 and a Random Forest classifier.
 """
 from data_cleaning import merge_data
+import plotly.figure_factory as ff
+# import plotly.graph_objs as go
+# import plotly.io as pio
 import os
 import pandas as pd
 import numpy as np
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 from IPython.display import Image, display
@@ -148,14 +151,16 @@ def rfc_model(features: pd.DataFrame, labels: pd.Series) -> None:
     """
     Trains and evaluates a random forest classifier using the given features
     and labels, and writes the results to a text file named
-    'random_forest_results.txt'.
+    'random_forest_results.txt'. Additionally, saves the confusion matrix
+    plot to a PNG image in the 'output' folder.
 
     Args:
         features (pd.DataFrame): A pandas dataframe of features.
         labels (pd.Series): A pandas series of labels.
 
     Returns:
-        None. This function writes the results to a text file.
+        None. This function writes the results to a text file and saves the
+        confusion matrix plot to a PNG image.
     """
     # Split the data into training and testing sets
     best_split = best_test_split(features, labels)
@@ -176,6 +181,22 @@ def rfc_model(features: pd.DataFrame, labels: pd.Series) -> None:
     scores = cross_val_score(rfc, features, labels, cv=5)
     cv_accuracy = np.mean(scores)
     print('Cross-Validation Accuracy:', cv_accuracy)
+
+    # Create confusion matrix
+    cm = confusion_matrix(Y_test, test_predictions)
+
+    # Create plotly heatmap
+    x = ['Predicted No Treatment', 'Predicted Treatment']
+    y = ['Actual No Treatment', 'Actual Treatment']
+    z = cm
+    text = [[f'{value:,}' for value in row] for row in z]
+
+    fig = ff.create_annotated_heatmap(z, x=x, y=y, annotation_text=text,
+                                      colorscale='Blues')
+    fig.update_layout(title='Random Forest Confusion Matrix')
+
+    # Save the figure in the output folder
+    fig.write_image("output/random_forest_confusion_matrix.png")
 
     # Print feature importances
     importances = rfc.feature_importances_
