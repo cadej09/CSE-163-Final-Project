@@ -6,7 +6,7 @@ file represents a research question, and all the visualization output will be sa
 to the "output" folder. To access our original data, go to the folder named "data."
 
 * To successfully run the py files, download the following libraries:
-  os, pandas, numpy, sklearn, IPython, plotly, and kaleido. you can use the following
-  method to install them: type "pip install <library_name>" in the terminal
+  os, pandas, numpy, sklearn, graphviz, IPython, plotly, and kaleido. you can use the
+  following method to install them: type "pip install <library_name>" in the terminal
 * For the interactive graph, it is saved as a html file to enable its interactive
   funcyionality. Double clicking on the html file opens us the graph in a browser.
