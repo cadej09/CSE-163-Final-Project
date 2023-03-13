@@ -1,4 +1,6 @@
+from data_cleaning import merge_data
 import plotly.express as px
+import plotly.io as pio
 
 def plot_work_interference(dataframe):
     # Drop rows with missing values
@@ -24,4 +26,13 @@ def plot_work_interference(dataframe):
                       yaxis_title='Number of Respondents')
 
     # Show the plot
-    fig.show()
+    pio.write_image(fig, 'output/question_6_graph.png')
+
+
+def main():
+    df = merge_data()
+    plot_work_interference(df)
+    
+
+if __name__ == '__main__':
+    main()

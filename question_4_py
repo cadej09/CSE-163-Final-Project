@@ -2,8 +2,10 @@
 This file aims to answer the question of how working in a tech company and the number of employees impact the
 likelihood of seeking mental health treatment, and it produces a stacked bar graph.
 """
+from data_cleaning import merge_data
 import plotly.express as px
 import pandas as pd
+import plotly.io as pio
 
 
 def plot_help_seeking_by_company_size(dataframe):
@@ -26,4 +28,13 @@ def plot_help_seeking_by_company_size(dataframe):
     fig.update_layout(showlegend=True, legend_title="Does your employer provide mental health resources?")
     fig.update_xaxes(type='category')
     fig.update_yaxes(title="Count of Participants")
-    fig.show()
+    pio.write_image(fig, 'output/question_4_graph.png')
+
+
+def main():
+    df = merge_data()
+    plot_help_seeking_by_company_size(df)
+    
+
+if __name__ == '__main__':
+    main()

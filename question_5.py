@@ -5,7 +5,9 @@ seeking mental health treatment?' This data visualization displays a choropleth 
 
 # plot_treatment_by_state(merged_df)
 
+from data_cleaning import merge_data
 import plotly.graph_objects as go
+import plotly.io as pio
 
 def plot_treatment_by_state(dataframe):
     data = dataframe.dropna()
@@ -28,4 +30,13 @@ def plot_treatment_by_state(dataframe):
         geo_scope='usa', 
     )
 
-    fig.show()
+    pio.write_image(fig, 'output/question_5_graph.png')
+
+
+def main():
+    df = merge_data()
+    plot_treatment_by_state(df)
+    
+
+if __name__ == '__main__':
+    main()
