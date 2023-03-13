@@ -25,7 +25,8 @@ def plot_help_seeking_by_company_size(dataframe):
                  color_discrete_map={"Yes": "#3D9970", "No": "#FF4136", "Don't know": "#FF851B"})
 
     # Adjust layout
-    fig.update_layout(showlegend=True, legend_title="Does your employer provide mental health resources?")
+    fig.update_layout(showlegend=True, legend_title="Does your employer provide mental health resources?",
+                      xaxis={"categoryorder": "array", "categoryarray": ['1-5', '6-25', '26-100', '100-500', '500-1000', 'More than 1000']})
     fig.update_xaxes(type='category')
     fig.update_yaxes(title="Count of Participants")
     pio.write_image(fig, 'output/question_4_graph.png')
