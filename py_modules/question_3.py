@@ -1,4 +1,10 @@
 """
+CSE163 WI23
+Cade Jeong, Pooja Thorail, Hans Xu
+
+This file contains a function that creates a bar chart to show the
+distribution of treatment groups by age group.
+The resulting plot is saved as a PNG image in the 'output' folder.
 """
 from data_cleaning import merge_data
 import pandas as pd

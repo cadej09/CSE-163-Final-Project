@@ -1,7 +1,12 @@
 """
-This file contains the functions created to answer the first research question.
-The functions will create machine learning models to predict the worker's
-likely of seeking treatment and will allow to see the correlation of factors.
+CSE163 WI23
+Cade Jeong, Pooja Thorail, Hans Xu
+
+This file contains functions to answer the first research question of
+a study on the mental health of tech workers. The functions create machine
+learning models to predict workers' likelihood of seeking treatment and
+show the correlation of factors. The models used are a Decision Tree
+and a Random Forest classifier.
 """
 from data_cleaning import merge_data
 import os
@@ -195,17 +200,31 @@ def rfc_model(features: pd.DataFrame, labels: pd.Series) -> None:
             f.write(rank_str)
 
 
-def main():
-    merged_df = merge_data()
-    data = merged_df[['Age', 'self_employed', 'family_history',
-                      'no_employees', 'tech_company', 'wellness_program',
-                      'treatment']].dropna()
+def research_question_1(df: pd.DataFrame) -> None:
+    """
+    Creates a Decision Tree and a Random Forest model to predict workers'
+    likelihood of seeking treatment, and visualizes the Decision Tree model.
+
+    Args:
+        df: A pandas dataframe that contains cleaned data.
+
+    Returns:
+        None.
+    """
+    data = df[['Age', 'self_employed', 'family_history',
+               'no_employees', 'tech_company', 'wellness_program',
+               'treatment']].dropna()
     features = data.loc[:, data.columns != 'treatment']
     features = pd.get_dummies(features)
     labels = data['treatment']
 
     dtc_model(features, labels)
     rfc_model(features, labels)
+
+
+def main():
+    merged_df = merge_data()
+    research_question_1(merged_df)
 
 
 if __name__ == '__main__':

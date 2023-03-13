@@ -1,7 +1,6 @@
 """
-Cade Jeong, Pooja Thorail, Hans Xue
-CSE 163 WI 23
-Final Project
+CSE163 WI23
+Cade Jeong, Pooja Thorail, Hans Xu
 
 A file that contains the main method
 """

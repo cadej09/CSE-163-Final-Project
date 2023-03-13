@@ -1,3 +1,15 @@
+"""
+CSE163 WI23
+Cade Jeong, Pooja Thorail, Hans Xu
+
+This module provides functions to analyze a dataset on mental health in the
+workplace. The dataset includes information on employees' experiences with
+mental health in the workplace, as well as demographic information.
+The analysis focuses on the relationship between employers' support for
+mental health and employees' comfort in discussing mental health, and how this
+relationship changes over time.
+"""
+
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
@@ -5,6 +17,17 @@ from data_cleaning import merge_data
 
 
 def employer_support(df: pd.DataFrame) -> None:
+    """
+    Update the wellness_program, care_options, and benefits columns in the
+    given DataFrame by replacing their string values with integer values to
+    create a support score.
+
+    Args:
+        df (pd.DataFrame): A pandas DataFrame of cleaned data.
+
+    Returns:
+        None: This function modifies the input DataFrame in place.
+    """
     # Wellness
     wellness = df['wellness_program']
     wellness.replace(["No", "Don't know", "I don't know", "Yes"],
@@ -23,6 +46,17 @@ def employer_support(df: pd.DataFrame) -> None:
 
 
 def employee_comfortable(df: pd.DataFrame) -> None:
+    """
+    Update the mental_health_interview, coworkers, and supervisor columns in
+    the given DataFrame by replacing their string values with integer values
+    to create a comfortable score.
+
+    Args:
+        df (pd.DataFrame): A pandas DataFrame of cleaned data.
+
+    Returns:
+        None: This function modifies the input DataFrame in place.
+    """
     # Do you think that discussing a mental health issue with your employer
     # would have negative consequences?
     mental_consequence = df['mental_health_interview']
@@ -39,6 +73,17 @@ def employee_comfortable(df: pd.DataFrame) -> None:
 
 
 def graph_relation(df: pd.DataFrame) -> None:
+    """
+    Create a scatter plot using plotly express to show the relationship between
+    the support score and comfortable score.
+
+    Args:
+        df (pd.DataFrame): A pandas DataFrame of cleaned data.
+
+    Returns:
+        None: This function generates a scatter plot and saves it as a PNG file
+        in the 'output' directory.
+    """
     df_group = (df.groupby('support_score')['comfortable_score']
                 .mean()
                 .reset_index()
@@ -60,11 +105,22 @@ def graph_relation(df: pd.DataFrame) -> None:
         },
         xaxis_title="Support Score",
         yaxis_title="Comfortable Score")
-    fig.show()
     pio.write_image(fig, 'output/RQ2_merged_graph.png')
 
 
 def graph_interactive(df: pd.DataFrame) -> None:
+    """
+    Create an interactive scatter plot using plotly express to show the
+    relationship between the support score and comfortable score, with
+    animation based on the year.
+
+    Args:
+        df (pd.DataFrame): A pandas DataFrame of cleaned data.
+
+    Returns:
+        None. This function generates an interactive scatter plot and saves it
+        as an HTML file in the 'output' directory.
+    """
     df_group = (df.groupby(['year', 'support_score'])['comfortable_score']
                 .mean()
                 .reset_index()
