@@ -84,7 +84,7 @@ def graph_interactive(df: pd.DataFrame) -> None:
             'yanchor': 'top'},
         xaxis_title="Support Score",
         yaxis_title="Comfortable Score")
-    pio.write_html(fig, 'output/RRQ2_interactive_fig.html')
+    pio.write_html(fig, 'output/RQ2_interactive_fig.html')
 
 
 def main():
