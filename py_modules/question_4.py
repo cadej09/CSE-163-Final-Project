@@ -8,7 +8,7 @@ import pandas as pd
 import plotly.io as pio
 
 
-def plot_help_seeking_by_company_size(dataframe):
+def plot_help_seeking_by_company_size(dataframe, output_filename):
     data = dataframe.dropna()
     data = data.sort_values(by=["no_employees"], ascending=True)
     emp_data = data[['no_employees','seek_help']]
@@ -25,15 +25,18 @@ def plot_help_seeking_by_company_size(dataframe):
                  color_discrete_map={"Yes": "#3D9970", "No": "#FF4136", "Don't know": "#FF851B"})
 
     # Adjust layout
-    fig.update_layout(showlegend=True, legend_title="Does your employer provide mental health resources?")
+    fig.update_layout(showlegend=True, legend_title="Does your employer provide mental health resources?",
+                      xaxis={"categoryorder": "array", "categoryarray": ['1-5', '6-25', '26-100', '100-500', '500-1000', 'More than 1000']})
     fig.update_xaxes(type='category')
     fig.update_yaxes(title="Count of Participants")
-    pio.write_image(fig, 'output/question_4_graph.png')
+    pio.write_image(fig, output_filename)
 
 
 def main():
     df = merge_data()
-    plot_help_seeking_by_company_size(df)
+    plot_help_seeking_by_company_size(df, 'output/question_4_graph.png')
+    df_14 = pd.read_csv('data/survey_14.csv')
+    plot_help_seeking_by_company_size(df_14, 'output/question_4_test_graph.png')
     
 
 if __name__ == '__main__':

@@ -60,6 +60,7 @@ def graph_relation(df: pd.DataFrame) -> None:
         },
         xaxis_title="Support Score",
         yaxis_title="Comfortable Score")
+    fig.show()
     pio.write_image(fig, 'output/RQ2_merged_graph.png')
 
 

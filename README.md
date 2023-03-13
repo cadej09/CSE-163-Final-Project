@@ -1,2 +1,6 @@
 # CSE-163-Final-Project
-
+Run the files in the folder "py_modules" to get our result. Each file represents
+a research question, and all the visualization output will be saved to the
+"output" folder.
+* To successfully run the py files, download the following libraries:
+* os, pandas, numpy, sklearn, IPython, plotly, and kaleido.

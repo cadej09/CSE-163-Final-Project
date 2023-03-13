@@ -1,3 +1,10 @@
+"""
+This file provides an analysis on the prevalence of work interference experienced by employees
+seeking treatment for mental health issues. The main output of the analysis is a pie chart, displaying the
+percentages of individuals who reported experiencing work interference due to
+their mental health treatment.
+"""
+
 from data_cleaning import merge_data
 import plotly.express as px
 import plotly.io as pio
