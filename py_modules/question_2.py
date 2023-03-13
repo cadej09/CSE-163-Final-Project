@@ -41,7 +41,7 @@ def employer_support(df: pd.DataFrame) -> None:
                       'Not eligible for coverage / N/A',
                       'Not eligible for coverage / NA'],
                      [0, 2, 2, 10, 0, 0], inplace=True)
-    # Calculate support score
+    # Calculate Support score
     df['support_score'] = wellness + care + benefits
 
 
@@ -57,18 +57,20 @@ def employee_comfortable(df: pd.DataFrame) -> None:
     Returns:
         None: This function modifies the input DataFrame in place.
     """
-    # Do you think that discussing a mental health issue with your employer
+    # Do you think that discussing a mental health issue during interview
     # would have negative consequences?
     mental_consequence = df['mental_health_interview']
     mental_consequence.replace(["No", "Maybe", "Yes"], [10, 2, 0],
                                inplace=True)
+    # Share with Coworkers
     coworkers = df['coworkers']
     coworkers.replace(["No", "Maybe", "Yes"], [0, 4, 10],
                       inplace=True)
+    # Share with Supervisor
     supervisor = df['supervisor']
     supervisor.replace(["No", "Maybe", "Yes"], [0, 6, 10],
                        inplace=True)
-    # comfortable score
+    # Calculate Comfortable score
     df['comfortable_score'] = mental_consequence + coworkers + supervisor
 
 
