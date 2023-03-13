@@ -11,10 +11,16 @@ import pandas as pd
 
 
 def merge_data():
-    """_summary_
+    """
+    Read in the three mental health survey datasets from 2014, 2016, and 2019.
+    Clean up each dataset to contain the same columns and values.
+    Concatenate the three datasets into one data frame.
 
     Returns:
-        _type_: _description_
+    --------
+    merged_df : pandas.DataFrame
+        A data frame containing the cleaned and concatenated data from
+        the three mental health surveys.
     """
     # Cleaning 2014 dataset.
     df_2014 = pd.read_csv('data/survey_14.csv')
