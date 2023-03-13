@@ -6,5 +6,5 @@ a local path. Run the files in the folder "py_modules" to get our result. Each
 file represents a research question, and all the visualization output will be saved
 to the "output" folder.
 * To successfully run the py files, download the following libraries:
-  os, pandas, numpy, sklearn, IPython, plotly, and kaleido. you can fuse the following
+  os, pandas, numpy, sklearn, IPython, plotly, and kaleido. you can use the following
   method to install them: type "pip install <library_name>" in the terminal
