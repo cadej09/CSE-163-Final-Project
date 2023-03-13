@@ -9,7 +9,7 @@ to the "output" folder. To access our original data, go to the folder named "dat
   os, pandas, numpy, sklearn, graphviz, IPython, plotly, and kaleido. you can use the
   following method to install them: type "pip install <library_name>" in the terminal
   
-  For the graphviz library, "pip install" will not work. Instead, try "conda install -c conda-forge
+  --For the graphviz library, "pip install" will not work. Instead, try "conda install -c conda-forge
   python-graphviz" in the terminal
 * For the interactive graph, it is saved as a html file to enable its interactive
   funcyionality. Double clicking on the html file opens us the graph in a browser.
