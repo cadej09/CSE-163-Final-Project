@@ -28,10 +28,12 @@ def plot_treatment_by_state(dataframe: pd.DataFrame) -> None:
         PNG image in the 'output' folder.
     """
     data = dataframe.dropna()
-    map_data = data[['state', 'treatment']]
-    map_data['treatment'] = map_data['treatment'].replace({'Yes': 1, 'No': 0})
+    map_data = data[['state', 'treatment']].copy()
+    map_data['treatment'] = map_data['treatment'].replace({
+        'Yes': 1,
+        'No': 0
+    }).values
 
-    map_data['treatment'] = map_data['treatment'].astype(int)
     map_data = map_data.groupby('state')['treatment'].sum().reset_index()
 
     fig = go.Figure(data=go.Choropleth(

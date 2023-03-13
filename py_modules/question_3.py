@@ -59,7 +59,7 @@ def treatment_by_age_group(df: pd.DataFrame) -> None:
     )
 
     # Save figure
-    pio.write_image(fig, 'output/treatment_by_age_group.png')
+    pio.write_image(fig, 'output/question_3_graph.png')
 
 
 def main():
