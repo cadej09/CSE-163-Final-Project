@@ -23,8 +23,7 @@ from sklearn.tree import DecisionTreeClassifier, export_graphviz
 def best_test_split(features: pd.DataFrame, labels: pd.Series) -> float:
     """
     Finds the best test split for a given dataset by testing the accuracy of
-    the model trained on different test sizes. If best is 0.1 or greater than
-    0.4, return 0.3
+    the model trained on different test sizes from 0.1 to 0.4.
 
     Args:
         features (pd.DataFrame): Features of the dataset.
