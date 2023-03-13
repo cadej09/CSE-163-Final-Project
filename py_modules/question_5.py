@@ -3,8 +3,6 @@ This file answers the question: 'How does the state ofresidence impact the likel
 seeking mental health treatment?' This data visualization displays a choropleth map of the United States.
 """
 
-# plot_treatment_by_state(merged_df)
-
 from data_cleaning import merge_data
 import plotly.graph_objects as go
 import plotly.io as pio
