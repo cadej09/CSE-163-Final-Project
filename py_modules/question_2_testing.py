@@ -9,8 +9,11 @@ import pandas as pd
 def question_2_testing_df() -> pd.DataFrame:
     """
     This function creates a testing dataframe for research question 2
+
+    Returns:
+        pd.DataFrame: This function will return the manually edited
+        testing DataFrame.
     """
-    import pandas as pd
     # create dictionary with column names and data
     data = {
         'wellness_program': ['Yes', 'No', 'Yes', 'Don\'t know', 'No'],
