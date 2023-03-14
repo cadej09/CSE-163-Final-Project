@@ -15,7 +15,8 @@ import pandas as pd
 import plotly.io as pio
 
 
-def plot_work_interference(dataframe: pd.DataFrame) -> None:
+def plot_work_interference(dataframe: pd.DataFrame,
+                           output_filename: str) -> None:
     """
     Plots a pie chart showing the prevalence of work interference experienced
     by employees seeking treatment for mental health issues.
@@ -57,12 +58,15 @@ def plot_work_interference(dataframe: pd.DataFrame) -> None:
                       yaxis_title='Number of Respondents')
 
     # Show the plot
-    pio.write_image(fig, 'output/question_6_graph.png')
+    pio.write_image(fig, output_filename)
 
 
 def main():
     df = merge_data()
-    plot_work_interference(df)
+    plot_work_interference(df, 'output/question_6_graph.png')
+    df_14 = pd.read_csv('data/survey_14.csv')
+    plot_work_interference(df_14,
+                           'output/question_6_test_graph.png')
 
 
 if __name__ == '__main__':

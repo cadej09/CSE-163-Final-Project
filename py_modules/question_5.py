@@ -14,7 +14,8 @@ import plotly.graph_objects as go
 import plotly.io as pio
 
 
-def plot_treatment_by_state(dataframe: pd.DataFrame) -> None:
+def plot_treatment_by_state(dataframe: pd.DataFrame,
+                            output_filename: str) -> None:
     """
     Plots a choropleth map of the United States with color-coded states
     based on the mental health treatment rate.
@@ -53,12 +54,15 @@ def plot_treatment_by_state(dataframe: pd.DataFrame) -> None:
         geo_scope='usa',
     )
 
-    pio.write_image(fig, 'output/question_5_graph.png')
+    pio.write_image(fig, output_filename)
 
 
 def main():
     df = merge_data()
-    plot_treatment_by_state(df)
+    plot_treatment_by_state(df, 'output/question_5_graph.png')
+    df_14 = pd.read_csv('data/survey_14.csv')
+    plot_treatment_by_state(df_14,
+                            'output/question_5_test_graph.png')
 
 
 if __name__ == '__main__':
