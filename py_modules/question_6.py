@@ -64,9 +64,6 @@ def plot_work_interference(dataframe: pd.DataFrame,
 def main():
     df = merge_data()
     plot_work_interference(df, 'output/question_6_graph.png')
-    df_14 = pd.read_csv('data/survey_14.csv')
-    plot_work_interference(df_14,
-                           'output/question_6_test_graph.png')
 
 
 if __name__ == '__main__':

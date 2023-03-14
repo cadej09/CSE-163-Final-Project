@@ -60,9 +60,6 @@ def plot_treatment_by_state(dataframe: pd.DataFrame,
 def main():
     df = merge_data()
     plot_treatment_by_state(df, 'output/question_5_graph.png')
-    df_14 = pd.read_csv('data/survey_14.csv')
-    plot_treatment_by_state(df_14,
-                            'output/question_5_test_graph.png')
 
 
 if __name__ == '__main__':

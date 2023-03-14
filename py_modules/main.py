@@ -63,7 +63,11 @@ def main():
     test_question_3(df)
     # Test Question 5
     df = merge_data
-    test_question_5
+    test_question_5(df)
+
+    df = merge_data
+    test_question_6(df)
+
 
 
 if __name__ == '__main__':

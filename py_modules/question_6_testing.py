@@ -10,7 +10,7 @@ from data_cleaning import merge_data
 import pandas as pd
 
 
-def find_most_common_work_interference(dataframe: pd.DataFrame) -> str:
+def most_common_work_interference(dataframe: pd.DataFrame) -> str:
     """
     Returns the level of work interference that occurs most
     often for employees seeking treatment.
@@ -31,13 +31,3 @@ def find_most_common_work_interference(dataframe: pd.DataFrame) -> str:
     most_common_work_interference = filtered_data['work_interfere'].mode().values[0]
 
     return most_common_work_interference
-
-
-def main():
-    df = merge_data()
-    most_common_work_interference = find_most_common_work_interference(df)
-    print(most_common_work_interference)
-
-
-if __name__ == '__main__':
-    main()
