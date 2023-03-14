@@ -10,7 +10,7 @@ Returns the combined datasets as a one data frame.
 import pandas as pd
 
 
-def merge_data():
+def merge_data() -> pd.DataFrame:
     """
     Read in the three mental health survey datasets from 2014, 2016, and 2019.
     Clean up each dataset to contain the same columns and values.
