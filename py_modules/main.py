@@ -5,7 +5,6 @@ Cade Jeong, Pooja Thorail, Hans Xu
 A file that contains the main method which runs all of our testing
 functions at once
 """
-
 import pandas as pd
 from data_cleaning import merge_data
 from cse163_utils import assert_equals
@@ -14,6 +13,7 @@ from question_2_testing import question_2_testing_df
 from question_3_testing import treatment_count_in_group
 from question_5_testing import find_max_state
 from question_6_testing import most_common_work_interference
+
 
 def test_question_2(df: pd.DataFrame, df_expected: pd.DataFrame) -> None:
     """
@@ -33,8 +33,10 @@ def test_question_2(df: pd.DataFrame, df_expected: pd.DataFrame) -> None:
 def test_question_3(df) -> None:
     assert_equals(771, treatment_count_in_group(df, '(29, 39]'))
 
+
 def test_question_5(df) -> None:
     assert_equals('CA', find_max_state(df))
+
 
 def test_question_6(df) -> None:
     assert_equals('Often', most_common_work_interference(df))
@@ -59,15 +61,14 @@ def main():
     df_expected = pd.DataFrame(expected_output)
     test_question_2(df_2, df_expected)
     # Test Question 3
-    df = merge_data()
-    test_question_3(df)
+    df_3 = merge_data()
+    test_question_3(df_3)
     # Test Question 5
-    df = merge_data
-    test_question_5(df)
-
-    df = merge_data
-    test_question_6(df)
-
+    df_5 = merge_data()
+    test_question_5(df_5)
+    # Test Question 6
+    df_6 = merge_data()
+    test_question_6(df_6)
 
 
 if __name__ == '__main__':

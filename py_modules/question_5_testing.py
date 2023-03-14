@@ -8,8 +8,6 @@ This file tests the question:
 It tests to see what state has the most number of
 participants seeking treatment
 """
-
-from data_cleaning import merge_data
 import pandas as pd
 
 
@@ -37,4 +35,3 @@ def find_max_state(dataframe: pd.DataFrame) -> str:
     max_treatment_state = map_data.loc[map_data['treatment'].idxmax()]['state']
 
     return max_treatment_state
-

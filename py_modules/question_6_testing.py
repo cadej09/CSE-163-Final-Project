@@ -6,7 +6,7 @@ This file provides testing on the prevalence of work interference
 experienced by employees seeking treatment for mental health issues.
 """
 
-from data_cleaning import merge_data
+
 import pandas as pd
 
 
@@ -29,5 +29,4 @@ def most_common_work_interference(dataframe: pd.DataFrame) -> str:
         filtered_data['work_interfere'] != 'Not applicable to me'
     ]
     most_common_work_interference = filtered_data['work_interfere'].mode().values[0]
-
     return most_common_work_interference
