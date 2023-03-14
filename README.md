@@ -1,9 +1,9 @@
 # CSE-163-Final-Project: Exploring Mental Health Treatment-Seeking Behaviors in the Tech Industry
 
-# Contributors: Pooja Thorali, Cade Jeong, Hans Xu
-# Course: CSE 163
+## Contributors: Pooja Thorali, Cade Jeong, Hans Xu
+## Course: CSE 163
 
-## Research Questions
+### Research Questions
 
 1. What factors are most strongly associated with seeking treatment for a mental health condition in the technology workplace?
 2. How does employer’s mental health support potentially impact an employee’s decision on whether to share their mental health status?
@@ -12,7 +12,7 @@
 5. How does the state in which participants live impact the likelihood of seeking mental health treatment? 
 6. What is the prevalence of work interference for employees seeking treatment for mental health issues?
 
-## Instructions
+### Instructions
 
 1. Download the zip file and make sure all the folders and files are under the same directory since our code contains saving images to and pulling dataset from a local path.
 2. Run the files in the folder "py_modules" to get our result. Each file represents a research question, and all the visualization output will be saved to the "output" folder.
