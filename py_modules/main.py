@@ -8,13 +8,23 @@ A file that contains the main method
 import pandas as pd
 from data_cleaning import merge_data
 from cse163_utils import assert_equals
-from question_2 import employer_support
-from question_2 import employee_comfortable
+from question_2 import employer_support, employee_comfortable
 from question_2_testing import question_2_testing_df
 from question_3_testing import treatment_count_in_group
 
 
 def test_question_2(df: pd.DataFrame, df_expected: pd.DataFrame) -> None:
+    """
+    This function compares the expected updated dataframe and the actual
+    updated dataframe.
+
+    Args:
+        df: pandas DataFrame, this is the actual updated df
+        df_expected: pandas DataFrame, this is the expected df
+
+    Return:
+        None.
+    """
     assert_equals(df, df_expected)
 
 
