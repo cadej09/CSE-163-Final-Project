@@ -20,3 +20,4 @@
 4. To successfully run the py files, download the following libraries: os, pandas, numpy, sklearn, graphviz, IPython, plotly, and kaleido. You can use the following method to install them: type "pip install <library_name>" in the terminal.
 5. For the graphviz library, "pip install" will not work. Instead, try "conda install -c conda-forge python-graphviz" in the terminal.
 6. For the interactive graph, it is saved as an HTML file to enable its interactive functionality. Double-clicking on the HTML file opens up the graph in a browser.
+7. The main.py file contains the main method that runs our testing functions for research question 2, 3, 5,and 6. The testing function for question four is inside the question_4.py file and the testing graph is saved to the output folder.
