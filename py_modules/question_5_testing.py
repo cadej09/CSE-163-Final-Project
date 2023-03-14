@@ -25,7 +25,7 @@ def find_max_state(dataframe: pd.DataFrame) -> str:
         number of participants seeking treatment
     """
     data = dataframe.dropna()
-    map_data = data[['state', 'treatment']]
+    map_data = data[['state', 'treatment']].copy()
     map_data['treatment'] = map_data['treatment'].replace({
         'Yes': 1,
         'No': 0

@@ -28,5 +28,9 @@ def most_common_work_interference(dataframe: pd.DataFrame) -> str:
     filtered_data = filtered_data[
         filtered_data['work_interfere'] != 'Not applicable to me'
     ]
-    most_common_work_interference = filtered_data['work_interfere'].mode().values[0]
+    most_common_work_interference = \
+        filtered_data['work_interfere'] \
+        .mode() \
+        .values[0]
+
     return most_common_work_interference
