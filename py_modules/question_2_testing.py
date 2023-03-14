@@ -13,6 +13,9 @@ def question_2_testing_df() -> pd.DataFrame:
     """
     This function creates a testing dataframe for research question 2
 
+    Args:
+        None.
+
     Returns:
         pd.DataFrame: This function will return the manually edited
         testing DataFrame.
