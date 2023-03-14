@@ -10,8 +10,6 @@ and a Random Forest classifier.
 """
 from data_cleaning import merge_data
 import plotly.figure_factory as ff
-# import plotly.graph_objs as go
-# import plotly.io as pio
 import os
 import pandas as pd
 import numpy as np
