@@ -13,7 +13,7 @@ from question_2 import employer_support, employee_comfortable
 from question_2_testing import question_2_testing_df
 from question_3_testing import treatment_count_in_group
 from question_5_testing import find_max_state
-
+from question_6_testing import most_common_work_interference
 
 def test_question_2(df: pd.DataFrame, df_expected: pd.DataFrame) -> None:
     """
@@ -35,6 +35,9 @@ def test_question_3(df) -> None:
 
 def test_question_5(df) -> None:
     assert_equals('CA', find_max_state(df))
+
+def test_question_6(df) -> None:
+    assert_equals('Often', most_common_work_interference(df))
 
 
 def main():
