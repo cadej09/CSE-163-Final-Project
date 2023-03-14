@@ -23,6 +23,7 @@ def test_question_3(df) -> None:
 
 
 def main():
+    # Test Question 2
     df_2 = question_2_testing_df()
     employer_support(df_2)
     employee_comfortable(df_2)
@@ -39,7 +40,7 @@ def main():
     }
     df_expected = pd.DataFrame(expected_output)
     test_question_2(df_2, df_expected)
-    
+    # Test Question 3
     df = merge_data()
     test_question_3(df)
 
